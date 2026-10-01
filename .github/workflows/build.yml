@@ -21,8 +21,10 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      - name: Sync Capacitor iOS
-        run: npx cap sync ios
+      - name: Add iOS Platform & Sync
+        run: |
+          npx cap add ios || true
+          npx cap sync ios
 
       - name: Build Xcode Project
         run: |
