@@ -21,15 +21,20 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      - name: Add iOS Platform & Sync
+      - name: Add iOS Platform & Install Pods
         run: |
           npx cap add ios || true
           npx cap sync ios
+          cd ios/App && pod install || true
 
       - name: Build Xcode Project
         run: |
           cd ios/App
-          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+          if [ -d "App.xcworkspace" ]; then
+            xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+          else
+            xcodebuild -project App.xcodeproj -scheme App -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+          fi
 
       - name: Upload Build Output
         uses: actions/upload-artifact@v4
