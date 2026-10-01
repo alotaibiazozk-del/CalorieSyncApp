@@ -1,0 +1,9 @@
+{
+  "appId": "com.caloriesync.app",
+  "appName": "CalorieSync",
+  "webDir": "www",
+  "server": {
+    "url": "https://caloriesync.netlify.app",
+    "cleartext": true
+  }
+}
